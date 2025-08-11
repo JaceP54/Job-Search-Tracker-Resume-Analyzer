@@ -1,7 +1,9 @@
 from flask import Flask, render_template
 from flask import Flask, render_template, request
 from scraper import fetch_filtered_jobs
+from flask import Flask, send_file
 import pandas as pd
+import os
 import csv
 
 app = Flask(__name__)
@@ -26,6 +28,10 @@ def results():
     else:
         return(f"There are no jobs for this keyword :(")
 
+@app.route('/download/<filename>')
+def download_file(filename):
+    file_path = os.path.join('path_to_your_files', filename) 
+    return send_file(file_path, as_attachment=True, download_name=filename)
 
 if __name__ == '__main__':
    app.run()
